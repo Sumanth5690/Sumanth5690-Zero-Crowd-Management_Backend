@@ -10,7 +10,6 @@ const bodyParser = require('body-parser');
 const PORT=process.env.PORT || 3000;
 
 
-
 const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 const otpStore = {};
