@@ -1,13 +1,14 @@
-const express = require('express');
+import express from "express"
 const app = express();
-const dotenv = require('dotenv');
-dotenv.config();
-const twilio = require('twilio');
-const bodyParser = require('body-parser');
+import dotenv from "dotenv"
+dotenv.config({
+    path:'./env'
+});
+import twilio from "twilio"
 
 
 
-const PORT=process.env.PORT || 3000;
+const PORT=process.env.PORT 
 
 
 const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
@@ -16,9 +17,9 @@ const otpStore = {};
 
 app.post('/send-otp', (req, res) => {
     const { phoneNumber } = req.body;
-    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); 
 
-    otpStore[phoneNumber] = otp; // Store OTP in memory (for demo purposes)
+    otpStore[phoneNumber] = otp; 
 
     client.messages
         .create({
@@ -34,6 +35,21 @@ app.post('/send-otp', (req, res) => {
         });
 })
 
+app.get("/api/healthcheck",(req,res)=>{
+    const jocks = [
+        {
+            id: "name",
+            name:"srujan",
+            jokes:"i can eat an elefent",
+        },
+        {
+            id:"srujan",
+            name:"monkey",
+            jokes:"hello what are you doing monkey",
+        }
+    ]
+    res.send(jocks)
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
